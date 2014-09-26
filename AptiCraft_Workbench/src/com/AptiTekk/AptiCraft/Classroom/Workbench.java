@@ -1,6 +1,8 @@
-package com.AptiTekk.AptiCraft_Workbench;
+package com.AptiTekk.AptiCraft.Classroom;
 
 import java.awt.AWTException;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
@@ -9,22 +11,31 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-public class Workbench
+@SuppressWarnings("serial")
+public class Workbench extends JFrame
 {
     
-    public static Workbench self;
-    
     private BufferedImage logoIcon;
-    
-    public static void main(String[] args)
-    {
-	self = new Workbench();
-    }
     
     public Workbench()
     {
 	initSysTray();
+	
+	JPanel contentPane = new JPanel(new BorderLayout());
+	this.setContentPane(contentPane);
+	
+	this.setMinimumSize(new Dimension(800, 600));
+	this.setMaximumSize(this.getMinimumSize());
+	this.setPreferredSize(this.getMaximumSize());
+	this.setResizable(false);
+	
+	//Insert Content Here
+	
+	this.pack();
+	this.setVisible(false);
     }
     
     private void initSysTray()
@@ -43,7 +54,7 @@ public class Workbench
 	    trayIcon.setImageAutoSize(true);
 	    trayIcon.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-	          trayIcon.displayMessage("Double Click!", "Some action performed", TrayIcon.MessageType.INFO);
+	          showWorkbench();
 	        }
 	      });
 	    SystemTray systemTray = SystemTray.getSystemTray();
@@ -57,6 +68,12 @@ public class Workbench
 	    }
 	    	
 	}
+    }
+    
+    private void showWorkbench()
+    {
+	this.setLocationRelativeTo(null);
+	this.setVisible(true);
     }
     
 }
