@@ -3,26 +3,42 @@ package com.AptiTekk.AptiCraft.Classroom;
 import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class Workbench extends JFrame
+public class Workbench extends JFrame implements MouseListener
 {
     
+    private JPanel headerPanel;
+    private JPanel menuPanel;
+    private JPanel bodyPanel;
+    private JPanel footerPanel;
     private BufferedImage logoIcon;
+    private BufferedImage menuIcons;
+    private MenuButton homeButton;
+    private MenuButton serversButton;
+    private MenuButton templatesButton;
+    private MenuButton pluginsButton;
+    private MenuButton settingsButton;
     
     public Workbench()
     {
+	loadImages();
 	initSysTray();
 	
 	JPanel contentPane = new JPanel(new BorderLayout());
@@ -35,55 +51,95 @@ public class Workbench extends JFrame
 	this.getContentPane().setBackground(new Color(230, 230, 230));
 	this.setIconImage(logoIcon);
 	
-	JPanel headerPanel = new JPanel();
-	headerPanel.setBackground(new Color(0,0,0,0));
-	headerPanel.setPreferredSize(new Dimension(700,50));
+	/* HEADER */
+	
+	this.headerPanel = new JPanel();
+	headerPanel.setBackground(new Color(0, 0, 0, 0));
+	headerPanel.setPreferredSize(new Dimension(700, 80));
 	this.add(headerPanel, BorderLayout.NORTH);
 	
-	JPanel menuPanel = new JPanel();
-	menuPanel.setBackground(new Color(0,0,0,0));
-	menuPanel.setPreferredSize(new Dimension(60,334));
+	/* MENU */
+	
+	this.menuPanel = new JPanel();
+	menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.Y_AXIS));
+	menuPanel.setBackground(new Color(0, 0, 0, 0));
+	menuPanel.setPreferredSize(new Dimension(60, 300));
 	this.add(menuPanel, BorderLayout.WEST);
 	
-	JPanel bodyPanel = new JPanel();
-	bodyPanel.setBackground(new Color(0,0,0,0));
+	this.homeButton = new MenuButton(menuIcons, 60, 60, 0, 0);
+	homeButton.setHighlighted(true);
+	homeButton.addMouseListener(this);
+	menuPanel.add(homeButton);
+	
+	this.serversButton = new MenuButton(menuIcons, 60, 60, 60, 0);
+	serversButton.setHighlighted(false);
+	serversButton.addMouseListener(this);
+	menuPanel.add(serversButton);
+	
+	this.templatesButton = new MenuButton(menuIcons, 60, 60, 120, 0);
+	templatesButton.setHighlighted(false);
+	templatesButton.addMouseListener(this);
+	menuPanel.add(templatesButton);
+	
+	this.pluginsButton = new MenuButton(menuIcons, 60, 60, 180, 0);
+	pluginsButton.setHighlighted(false);
+	pluginsButton.addMouseListener(this);
+	menuPanel.add(pluginsButton);
+	
+	this.settingsButton = new MenuButton(menuIcons, 60, 60, 240, 0);
+	settingsButton.setHighlighted(false);
+	settingsButton.addMouseListener(this);
+	menuPanel.add(settingsButton);
+	
+	/* BODY */
+	
+	this.bodyPanel = new JPanel();
+	bodyPanel.setBackground(new Color(0, 0, 0, 0));
 	this.add(bodyPanel, BorderLayout.CENTER);
 	
-	JPanel footerPanel = new JPanel();
-	footerPanel.setBackground(new Color(0,0,0,0));
-	footerPanel.setPreferredSize(new Dimension(700,40));
+	/* FOOTER */
+	
+	this.footerPanel = new JPanel();
+	footerPanel.setBackground(new Color(179, 179, 179));
+	footerPanel.setPreferredSize(new Dimension(700, 40));
 	this.add(footerPanel, BorderLayout.SOUTH);
 	
-	//Insert Content Here
+	/* END */
 	
 	this.pack();
 	this.setVisible(false);
-	
-	System.out.println("Header: "+headerPanel.getSize());
-	System.out.println("Menu: "+menuPanel.getSize());
-	System.out.println("Body: "+bodyPanel.getSize());
-	System.out.println("Footer: "+footerPanel.getSize());
     }
     
-    private void initSysTray()
+    private void loadImages()
     {
 	try
 	{
-	    logoIcon = ImageIO.read(Workbench.class.getResource("/assets/images/AptiCraft-Server-Logo-64px.png"));
+	    logoIcon = ImageIO
+		    .read(Workbench.class
+			    .getResource("/assets/images/AptiCraft-Server-Logo-64px.png"));
+	    menuIcons = ImageIO.read(Workbench.class
+		    .getResource("/assets/images/gui/menu/Icons.png"));
 	}
 	catch(IOException e)
 	{
 	    e.printStackTrace();
 	}
+    }
+    
+    private void initSysTray()
+    {
 	if(SystemTray.isSupported())
 	{
-	    final TrayIcon trayIcon = new TrayIcon(logoIcon, "AptiCraft Classroom");
+	    final TrayIcon trayIcon = new TrayIcon(logoIcon,
+		    "AptiCraft Classroom");
 	    trayIcon.setImageAutoSize(true);
-	    trayIcon.addActionListener(new ActionListener() {
-	        public void actionPerformed(ActionEvent e) {
-	          showWorkbench();
-	        }
-	      });
+	    trayIcon.addActionListener(new ActionListener()
+	    {
+		public void actionPerformed(ActionEvent e)
+		{
+		    showWorkbench();
+		}
+	    });
 	    SystemTray systemTray = SystemTray.getSystemTray();
 	    try
 	    {
@@ -93,7 +149,7 @@ public class Workbench extends JFrame
 	    {
 		e.printStackTrace();
 	    }
-	    	
+	    
 	}
     }
     
@@ -101,6 +157,67 @@ public class Workbench extends JFrame
     {
 	this.setLocationRelativeTo(null);
 	this.setVisible(true);
+    }
+    
+    @Override
+    public void mouseClicked(MouseEvent arg0)
+    {
+    }
+    
+    @Override
+    public void mouseEntered(MouseEvent arg0)
+    {
+	if(arg0.getSource() != null)
+	    if(arg0.getSource() instanceof MenuButton)
+	    {
+		MenuButton button = (MenuButton) arg0.getSource();
+		button.setHovering(true);
+	    }
+    }
+    
+    @Override
+    public void mouseExited(MouseEvent arg0)
+    {
+	if(arg0.getSource() != null)
+	    if(arg0.getSource() instanceof MenuButton)
+	    {
+		MenuButton button = (MenuButton) arg0.getSource();
+		button.setHovering(false);
+	    }
+    }
+    
+    @Override
+    public void mousePressed(MouseEvent arg0)
+    {
+	if(arg0.getSource() != null)
+	    if(arg0.getSource() instanceof MenuButton)
+	    {
+		MenuButton button = (MenuButton) arg0.getSource();
+		button.setShrunk(true);
+	    }
+    }
+    
+    @Override
+    public void mouseReleased(MouseEvent arg0)
+    {
+	if(arg0.getSource() != null)
+	    if(Arrays.asList(menuPanel.getComponents()).contains(
+		    arg0.getSource()))
+		if(arg0.getSource() instanceof MenuButton)
+		{
+		    MenuButton button = (MenuButton) arg0.getSource();
+		    button.setShrunk(false);
+		    if(!button.isHighlighted())
+		    {
+			for(Component otherButton : menuPanel.getComponents())
+			{
+			    if(otherButton instanceof MenuButton)
+				((MenuButton) otherButton)
+					.setHighlighted(false);
+			}
+			button.setHighlighted(true);
+		    }
+		}
     }
     
 }
