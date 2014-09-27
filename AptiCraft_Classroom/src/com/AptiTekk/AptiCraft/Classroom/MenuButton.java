@@ -15,14 +15,16 @@ public class MenuButton extends JLabel
     private boolean highlighted = false;
     private boolean hovering = false;
     private boolean shrunk = false;
+    private MenuEnum enumType;
     private int w;
     private int h;
     private int x;
     private int y;
     
-    public MenuButton(BufferedImage menuIcons, int w, int h, int x, int y)
+    public MenuButton(BufferedImage menuIcons, MenuEnum enumType, int w, int h, int x, int y)
     {
 	this.menuIcons = menuIcons;
+	this.enumType = enumType;
 	this.w = w;
 	this.h = h;
 	this.x = x;
@@ -71,6 +73,11 @@ public class MenuButton extends JLabel
 	return this.shrunk;
     }
     
+    public MenuEnum getEnumType()
+    {
+	return this.enumType;
+    }
+    
     @Override
     public boolean equals(Object other)
     {
@@ -86,6 +93,8 @@ public class MenuButton extends JLabel
 	if(otherButton.isHovering() != this.isHovering())
 	    return false;
 	if(otherButton.isShrunk() != this.isShrunk())
+	    return false;
+	if(otherButton.getEnumType() != this.getEnumType())
 	    return false;
 	
 	return super.equals(other);

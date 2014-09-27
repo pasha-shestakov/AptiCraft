@@ -24,12 +24,13 @@ import javax.swing.JPanel;
 public class Workbench extends JFrame implements MouseListener
 {
     
-    private JPanel headerPanel;
+    private HeaderPanel headerPanel;
     private JPanel menuPanel;
     private JPanel bodyPanel;
     private JPanel footerPanel;
     private BufferedImage logoIcon;
     private BufferedImage menuIcons;
+    private BufferedImage headerImage;
     private MenuButton homeButton;
     private MenuButton serversButton;
     private MenuButton templatesButton;
@@ -53,9 +54,8 @@ public class Workbench extends JFrame implements MouseListener
 	
 	/* HEADER */
 	
-	this.headerPanel = new JPanel();
+	this.headerPanel = new HeaderPanel(headerImage);
 	headerPanel.setBackground(new Color(0, 0, 0, 0));
-	headerPanel.setPreferredSize(new Dimension(700, 80));
 	this.add(headerPanel, BorderLayout.NORTH);
 	
 	/* MENU */
@@ -66,27 +66,27 @@ public class Workbench extends JFrame implements MouseListener
 	menuPanel.setPreferredSize(new Dimension(60, 300));
 	this.add(menuPanel, BorderLayout.WEST);
 	
-	this.homeButton = new MenuButton(menuIcons, 60, 60, 0, 0);
+	this.homeButton = new MenuButton(menuIcons, MenuEnum.HOME, 60, 60, 0, 0);
 	homeButton.setHighlighted(true);
 	homeButton.addMouseListener(this);
 	menuPanel.add(homeButton);
 	
-	this.serversButton = new MenuButton(menuIcons, 60, 60, 60, 0);
+	this.serversButton = new MenuButton(menuIcons, MenuEnum.SERVERS, 60, 60, 60, 0);
 	serversButton.setHighlighted(false);
 	serversButton.addMouseListener(this);
 	menuPanel.add(serversButton);
 	
-	this.templatesButton = new MenuButton(menuIcons, 60, 60, 120, 0);
+	this.templatesButton = new MenuButton(menuIcons, MenuEnum.TEMPLATES, 60, 60, 120, 0);
 	templatesButton.setHighlighted(false);
 	templatesButton.addMouseListener(this);
 	menuPanel.add(templatesButton);
 	
-	this.pluginsButton = new MenuButton(menuIcons, 60, 60, 180, 0);
+	this.pluginsButton = new MenuButton(menuIcons, MenuEnum.PLUGINS, 60, 60, 180, 0);
 	pluginsButton.setHighlighted(false);
 	pluginsButton.addMouseListener(this);
 	menuPanel.add(pluginsButton);
 	
-	this.settingsButton = new MenuButton(menuIcons, 60, 60, 240, 0);
+	this.settingsButton = new MenuButton(menuIcons, MenuEnum.SETTINGS, 60, 60, 240, 0);
 	settingsButton.setHighlighted(false);
 	settingsButton.addMouseListener(this);
 	menuPanel.add(settingsButton);
@@ -108,6 +108,8 @@ public class Workbench extends JFrame implements MouseListener
 	
 	this.pack();
 	this.setVisible(false);
+	
+	System.out.println(headerPanel.getSize());
     }
     
     private void loadImages()
@@ -119,6 +121,8 @@ public class Workbench extends JFrame implements MouseListener
 			    .getResource("/assets/images/AptiCraft-Server-Logo-64px.png"));
 	    menuIcons = ImageIO.read(Workbench.class
 		    .getResource("/assets/images/gui/menu/Icons.png"));
+	    headerImage = ImageIO.read(Workbench.class
+		    .getResource("/assets/images/gui/header/Header.png"));
 	}
 	catch(IOException e)
 	{
@@ -216,6 +220,7 @@ public class Workbench extends JFrame implements MouseListener
 					.setHighlighted(false);
 			}
 			button.setHighlighted(true);
+			headerPanel.setMenuLabel(button.getEnumType());
 		    }
 		}
     }
