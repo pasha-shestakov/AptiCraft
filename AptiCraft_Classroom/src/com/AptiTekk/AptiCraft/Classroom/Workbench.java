@@ -108,8 +108,6 @@ public class Workbench extends JFrame implements MouseListener
 	
 	this.pack();
 	this.setVisible(false);
-	
-	System.out.println(headerPanel.getSize());
     }
     
     private void loadImages()
