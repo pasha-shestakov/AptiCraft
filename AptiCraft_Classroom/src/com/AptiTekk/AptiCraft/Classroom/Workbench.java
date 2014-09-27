@@ -37,7 +37,7 @@ public class Workbench extends JFrame implements MouseListener
     private MenuButton pluginsButton;
     private MenuButton settingsButton;
     
-    public Workbench()
+    public Workbench(boolean openAutomatically)
     {
 	loadImages();
 	initSysTray();
@@ -107,7 +107,10 @@ public class Workbench extends JFrame implements MouseListener
 	/* END */
 	
 	this.pack();
-	this.setVisible(false);
+	if(openAutomatically)
+	    this.showWorkbench();
+	else
+	    this.setVisible(false);
     }
     
     private void loadImages()
