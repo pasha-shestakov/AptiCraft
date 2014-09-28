@@ -19,19 +19,7 @@ public class PropertiesHandler
     
     public PropertiesHandler()
     {
-	this.properties = new Properties();
-	try
-	{
-	    properties.load(new FileInputStream(propertiesFile));
-	}
-	catch(FileNotFoundException e)
-	{
-	    createNewProperties();
-	}
-	catch(IOException e)
-	{
-	    e.printStackTrace();
-	}
+	loadProperties();
 	validateProperties();
     }
     
@@ -39,20 +27,9 @@ public class PropertiesHandler
     {
 	for(PropertiesEnum key : PropertiesEnum.values())
 	{
-	    this.properties.setProperty(key.getKey(), key.getDefaultValue());
+	    setProperty(key, key.getDefaultValue());
 	}
-	try
-	{
-	    this.properties.store(new FileOutputStream(propertiesFile), null);
-	}
-	catch(FileNotFoundException e)
-	{
-	    e.printStackTrace();
-	}
-	catch(IOException e)
-	{
-	    e.printStackTrace();
-	}
+	saveProperties();
     }
     
     private void validateProperties()
@@ -62,13 +39,33 @@ public class PropertiesHandler
 	{
 	    if(!this.properties.containsKey(key.getKey()))
 	    {
-		this.properties
-			.setProperty(key.getKey(), key.getDefaultValue());
+		setProperty(key, key.getDefaultValue());
 		needsSave = true;
 	    }
 	}
 	if(needsSave)
-	    try
+	    saveProperties();
+    }
+    
+    private boolean parseBoolean(PropertiesEnum key)
+    {
+	return this.properties.getProperty(key.getKey(), key.getDefaultValue())
+		.equals("true") ? true : false;
+    }
+    
+    private void setProperty(PropertiesEnum key, String value)
+    {
+	this.properties.setProperty(key.getKey(), value);
+    }
+    
+    private void setProperty(PropertiesEnum key, boolean value)
+    {
+	this.properties.setProperty(key.getKey(), (value) ? "true" : "false");
+    }
+    
+    private void saveProperties()
+    {
+	try
 	    {
 		this.properties.store(new FileOutputStream(propertiesFile),
 			null);
@@ -83,10 +80,21 @@ public class PropertiesHandler
 	    }
     }
     
-    private boolean parseBoolean(PropertiesEnum key)
+    private void loadProperties()
     {
-	return this.properties.getProperty(key.getKey(), key.getDefaultValue())
-		.equals("true") ? true : false;
+	this.properties = new Properties();
+	try
+	{
+	    properties.load(new FileInputStream(propertiesFile));
+	}
+	catch(FileNotFoundException e)
+	{
+	    createNewProperties();
+	}
+	catch(IOException e)
+	{
+	    e.printStackTrace();
+	}
     }
     
     private String parseString(PropertiesEnum key)
@@ -99,14 +107,29 @@ public class PropertiesHandler
 	return parseString(PropertiesEnum.CLASSROOM_NAME);
     }
     
+    public void setClassroomName(String name)
+    {
+	setProperty(PropertiesEnum.CLASSROOM_NAME, name);
+    }
+    
     public String getClassroomPassword()
     {
 	return parseString(PropertiesEnum.CLASSROOM_PASSWORD);
     }
     
-    public boolean shouldOpenWorkbenchOnStartup()
+    public void setClassroomPassword(String password)
+    {
+	setProperty(PropertiesEnum.CLASSROOM_PASSWORD, password);
+    }
+    
+    public boolean getOpenWorkbenchOnStartup()
     {
 	return parseBoolean(PropertiesEnum.OPEN_WORKBENCH_ON_STARTUP);
+    }
+    
+    public void setOpenWorkbenchOnStartup(boolean open)
+    {
+	setProperty(PropertiesEnum.OPEN_WORKBENCH_ON_STARTUP, open);
     }
     
 }

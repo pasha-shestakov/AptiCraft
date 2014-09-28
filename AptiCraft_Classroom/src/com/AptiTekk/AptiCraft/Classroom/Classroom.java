@@ -11,7 +11,7 @@ public class Classroom
     public Classroom()
     {
 	this.propertiesHandler = new PropertiesHandler();
-	this.workbench = new Workbench(this.propertiesHandler.shouldOpenWorkbenchOnStartup());
+	this.workbench = new Workbench(this.propertiesHandler.getOpenWorkbenchOnStartup());
     }
     
     public Workbench getWorkbench()
