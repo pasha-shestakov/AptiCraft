@@ -2,13 +2,14 @@ package com.AptiTekk.AptiCraft.Classroom.Properties;
 
 public enum PropertiesEnum
 {
-    CLASSROOM_NAME("classroomName", "AptiCraft"),
-    CLASSROOM_PASSWORD("classroomPassword", ""),
-    OPEN_WORKBENCH_ON_STARTUP("openWorkbenchOnStartup", "true");
+    CLASSROOM_NAME("ClassroomName", "AptiCraft"),
+    CLASSROOM_PASSWORD("ClassroomPassword", ""),
+    OPEN_WORKBENCH_ON_STARTUP("OpenWorkbenchOnStartup", "true"),
+    VERBOSE_LOGGING("VerboseLogging", "false");
     
     private String key;
     private String defaultValue;
-
+    
     private PropertiesEnum(String key, String defaultValue)
     {
 	this.key = key;

@@ -71,22 +71,26 @@ public class Workbench extends JFrame implements MouseListener
 	homeButton.addMouseListener(this);
 	menuPanel.add(homeButton);
 	
-	this.serversButton = new MenuButton(menuIcons, MenuEnum.SERVERS, 60, 60, 60, 0);
+	this.serversButton = new MenuButton(menuIcons, MenuEnum.SERVERS, 60,
+		60, 60, 0);
 	serversButton.setHighlighted(false);
 	serversButton.addMouseListener(this);
 	menuPanel.add(serversButton);
 	
-	this.templatesButton = new MenuButton(menuIcons, MenuEnum.TEMPLATES, 60, 60, 120, 0);
+	this.templatesButton = new MenuButton(menuIcons, MenuEnum.TEMPLATES,
+		60, 60, 120, 0);
 	templatesButton.setHighlighted(false);
 	templatesButton.addMouseListener(this);
 	menuPanel.add(templatesButton);
 	
-	this.pluginsButton = new MenuButton(menuIcons, MenuEnum.PLUGINS, 60, 60, 180, 0);
+	this.pluginsButton = new MenuButton(menuIcons, MenuEnum.PLUGINS, 60,
+		60, 180, 0);
 	pluginsButton.setHighlighted(false);
 	pluginsButton.addMouseListener(this);
 	menuPanel.add(pluginsButton);
 	
-	this.settingsButton = new MenuButton(menuIcons, MenuEnum.SETTINGS, 60, 60, 240, 0);
+	this.settingsButton = new MenuButton(menuIcons, MenuEnum.SETTINGS, 60,
+		60, 240, 0);
 	settingsButton.setHighlighted(false);
 	settingsButton.addMouseListener(this);
 	menuPanel.add(settingsButton);

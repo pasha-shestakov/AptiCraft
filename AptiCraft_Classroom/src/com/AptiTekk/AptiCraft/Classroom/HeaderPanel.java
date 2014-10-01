@@ -33,8 +33,8 @@ public class HeaderPanel extends JPanel
 		headerImage.getSubimage(0, 80, 694, 30));
 	this.templatesIcon = new ImageIcon(headerImage.getSubimage(0, 110, 694,
 		30));
-	this.pluginsIcon = new ImageIcon(
-		headerImage.getSubimage(0, 140, 694, 30));
+	this.pluginsIcon = new ImageIcon(headerImage.getSubimage(0, 140, 694,
+		30));
 	this.settingsIcon = new ImageIcon(headerImage.getSubimage(0, 170, 694,
 		30));
 	

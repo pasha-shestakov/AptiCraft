@@ -21,7 +21,8 @@ public class MenuButton extends JLabel
     private int x;
     private int y;
     
-    public MenuButton(BufferedImage menuIcons, MenuEnum enumType, int w, int h, int x, int y)
+    public MenuButton(BufferedImage menuIcons, MenuEnum enumType, int w, int h,
+	    int x, int y)
     {
 	this.menuIcons = menuIcons;
 	this.enumType = enumType;

@@ -66,18 +66,17 @@ public class PropertiesHandler
     private void saveProperties()
     {
 	try
-	    {
-		this.properties.store(new FileOutputStream(propertiesFile),
-			null);
-	    }
-	    catch(FileNotFoundException e)
-	    {
-		e.printStackTrace();
-	    }
-	    catch(IOException e)
-	    {
-		e.printStackTrace();
-	    }
+	{
+	    this.properties.store(new FileOutputStream(propertiesFile), null);
+	}
+	catch(FileNotFoundException e)
+	{
+	    e.printStackTrace();
+	}
+	catch(IOException e)
+	{
+	    e.printStackTrace();
+	}
     }
     
     private void loadProperties()
@@ -130,6 +129,16 @@ public class PropertiesHandler
     public void setOpenWorkbenchOnStartup(boolean open)
     {
 	setProperty(PropertiesEnum.OPEN_WORKBENCH_ON_STARTUP, open);
+    }
+    
+    public boolean getVerboseLogging()
+    {
+	return parseBoolean(PropertiesEnum.VERBOSE_LOGGING);
+    }
+    
+    public void setVerboseLogging(boolean verbose)
+    {
+	setProperty(PropertiesEnum.VERBOSE_LOGGING, verbose);
     }
     
 }
