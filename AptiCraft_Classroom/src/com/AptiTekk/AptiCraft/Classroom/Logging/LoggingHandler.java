@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,7 +57,6 @@ public class LoggingHandler
 			i++;
 		    }
 		    
-		    System.out.println(sortedFiles.length);
 		    for(i = 0; i < sortedFiles.length - 8; i++)
 		    {
 			sortedFiles[sortedFiles.length - 1 - i].delete();
@@ -68,9 +67,10 @@ public class LoggingHandler
 		    + "_%u_%g.log", 30000, 4, false);
 	    handler.setFormatter(new SingleLineFormatter());
 	    logger.addHandler(handler);
-	    logger.getParent().getHandlers()[0]
-		    .setFormatter(new SingleLineFormatter());
-	    // logger.setUseParentHandlers(false); //To disable console logging.
+	    ConsoleHandler handler2 = new ConsoleHandler();
+	    handler2.setFormatter(new SingleLineFormatter());
+	    logger.addHandler(handler2);
+	    logger.setUseParentHandlers(false);
 	}
 	catch(IOException e)
 	{
@@ -84,6 +84,8 @@ public class LoggingHandler
     public void setLogLevel(Level level)
     {
 	this.logger.setLevel(level);
+	for(Handler handler : this.logger.getHandlers())
+	    handler.setLevel(level);
     }
     
     public void logMessage(String message, Level logType)

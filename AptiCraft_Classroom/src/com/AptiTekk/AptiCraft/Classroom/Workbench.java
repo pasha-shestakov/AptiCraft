@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Arrays;
@@ -24,6 +26,7 @@ import javax.swing.JPanel;
 public class Workbench extends JFrame implements MouseListener
 {
     
+    private final Classroom classroom;
     private HeaderPanel headerPanel;
     private JPanel menuPanel;
     private JPanel bodyPanel;
@@ -37,8 +40,10 @@ public class Workbench extends JFrame implements MouseListener
     private MenuButton pluginsButton;
     private MenuButton settingsButton;
     
-    public Workbench(boolean openAutomatically)
+    public Workbench(final Classroom classroom, boolean openAutomatically)
     {
+	this.classroom = classroom;
+	
 	loadImages();
 	initSysTray();
 	
@@ -111,6 +116,20 @@ public class Workbench extends JFrame implements MouseListener
 	/* END */
 	
 	this.pack();
+	
+	this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+	
+	addWindowListener(new WindowAdapter()
+	{
+	    @Override
+	    public void windowClosing(WindowEvent e)
+	    {
+		classroom.logVerbose("Closing Workbench...");
+		setVisible(false);
+		dispose();
+	    }
+	});
+	
 	if(openAutomatically)
 	    this.showWorkbench();
 	else
@@ -164,6 +183,7 @@ public class Workbench extends JFrame implements MouseListener
     
     private void showWorkbench()
     {
+	this.classroom.logVerbose("Opening Workbench...");
 	this.setLocationRelativeTo(null);
 	this.setVisible(true);
     }

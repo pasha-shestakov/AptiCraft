@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import com.AptiTekk.AptiCraft.Classroom.Classroom;
 import com.AptiTekk.AptiCraft.Classroom.Utilities;
 
 public class PropertiesHandler
@@ -16,15 +17,20 @@ public class PropertiesHandler
     public static final File propertiesFile = new File(
 	    Utilities.getRootDirectory(), propertiesFileName);
     private Properties properties;
+    private Classroom classroom;
     
-    public PropertiesHandler()
+    public PropertiesHandler(Classroom classroom)
     {
+	this.classroom = classroom;
 	loadProperties();
+	classroom.logVerbose("Properties Loaded.");
 	validateProperties();
+	classroom.logVerbose("Properties Validated.");
     }
     
     private void createNewProperties()
     {
+	classroom.logVerbose("Creating new Properties file...");
 	for(PropertiesEnum key : PropertiesEnum.values())
 	{
 	    setProperty(key, key.getDefaultValue());
@@ -34,6 +40,7 @@ public class PropertiesHandler
     
     private void validateProperties()
     {
+	classroom.logVerbose("Validating Properties...");
 	boolean needsSave = false;
 	for(PropertiesEnum key : PropertiesEnum.values())
 	{
@@ -56,15 +63,18 @@ public class PropertiesHandler
     private void setProperty(PropertiesEnum key, String value)
     {
 	this.properties.setProperty(key.getKey(), value);
+	this.saveProperties();
     }
     
     private void setProperty(PropertiesEnum key, boolean value)
     {
 	this.properties.setProperty(key.getKey(), (value) ? "true" : "false");
+	this.saveProperties();
     }
     
     private void saveProperties()
     {
+	classroom.logVerbose("Saving Properties.");
 	try
 	{
 	    this.properties.store(new FileOutputStream(propertiesFile), null);
@@ -81,6 +91,7 @@ public class PropertiesHandler
     
     private void loadProperties()
     {
+	classroom.logVerbose("Loading Properties...");
 	this.properties = new Properties();
 	try
 	{
