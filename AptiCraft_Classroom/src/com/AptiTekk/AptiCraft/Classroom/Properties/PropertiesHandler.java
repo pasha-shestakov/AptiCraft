@@ -89,12 +89,6 @@ public class PropertiesHandler
 	    }
     }
     
-    private boolean parseBoolean(PropertiesEnum key)
-    {
-	return this.properties.getProperty(key.getKey(), key.getDefaultValue())
-		.equals("true") ? true : false;
-    }
-    
     private void setProperty(PropertiesEnum key, String value)
     {
 	this.properties.setProperty(key.getKey(), value);
@@ -104,6 +98,12 @@ public class PropertiesHandler
     private void setProperty(PropertiesEnum key, boolean value)
     {
 	this.properties.setProperty(key.getKey(), (value) ? "true" : "false");
+	this.saveProperties();
+    }
+    
+    private void setProperty(PropertiesEnum key, int value)
+    {
+	this.properties.setProperty(key.getKey(), value+"");
 	this.saveProperties();
     }
     
@@ -131,6 +131,28 @@ public class PropertiesHandler
 	return this.properties.getProperty(key.getKey(), key.getDefaultValue());
     }
     
+    private boolean parseBoolean(PropertiesEnum key)
+    {
+	return this.properties.getProperty(key.getKey(), key.getDefaultValue())
+		.equals("true") ? true : false;
+    }
+    
+    private int parseInteger(PropertiesEnum key)
+    {
+	int parsed = 0;
+	
+	try
+	{
+	    parsed = Integer.parseInt(this.properties.getProperty(key.getKey(), key.getDefaultValue()));
+	}
+	catch(NumberFormatException e)
+	{
+	    parsed = Integer.parseInt(key.getDefaultValue());
+	}
+	
+	return parsed;
+    }
+    
     public String getClassroomName()
     {
 	return parseString(PropertiesEnum.CLASSROOM_NAME);
@@ -149,6 +171,16 @@ public class PropertiesHandler
     public void setClassroomPassword(String password)
     {
 	setProperty(PropertiesEnum.CLASSROOM_PASSWORD, password);
+    }
+    
+    public int getClassroomPort()
+    {
+	return parseInteger(PropertiesEnum.CLASSROOM_PORT);
+    }
+    
+    public void setClassroomPort(int port)
+    {
+	setProperty(PropertiesEnum.CLASSROOM_PORT, port);
     }
     
     public boolean getOpenWorkbenchOnStartup()

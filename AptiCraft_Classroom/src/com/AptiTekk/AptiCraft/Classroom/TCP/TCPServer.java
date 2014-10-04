@@ -25,15 +25,16 @@ public class TCPServer
 	server.start();
 	try
 	{
-	    server.bind(12000);
-	    classroom.logVerbose("Server bound to TCP Port 12000.");
+	    int port = classroom.getPropertiesHandler().getClassroomPort();
+	    server.bind(port);
+	    classroom.logVerbose("Server bound to TCP Port "+port+".");
 	    server.addListener(new TCPListener());
 	    classroom.logVerbose("Added TCPListener.");
 	}
 	catch(IOException e)
 	{
 	    classroom.logSevere("Could not start TCPServer! Output:");
-	    e.printStackTrace();
+	    classroom.logSevere(e.toString());
 	}
 	classroom.log("TCPServer Started.");
     }

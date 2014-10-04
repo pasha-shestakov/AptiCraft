@@ -108,7 +108,7 @@ public class Classroom
 	    catch(AWTException e)
 	    {
 		logSevere("Could not Initialize Classroom System Tray Icon! Output:");
-		e.printStackTrace();
+		logSevere(e.toString());
 	    }
 	}
 	else
@@ -132,6 +132,11 @@ public class Classroom
 	return workbench;
     }
     
+    public PropertiesHandler getPropertiesHandler()
+    {
+	return this.propertiesHandler;
+    }
+    
     public void log(String message)
     {
 	this.loggingHandler.logMessage(message, Level.INFO);
@@ -151,5 +156,5 @@ public class Classroom
     {
 	this.loggingHandler.logMessage(message, Level.SEVERE);
     }
-    
+
 }

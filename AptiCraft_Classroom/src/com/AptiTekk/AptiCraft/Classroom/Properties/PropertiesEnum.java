@@ -4,6 +4,7 @@ public enum PropertiesEnum
 {
     CLASSROOM_NAME("ClassroomName", "AptiCraft"),
     CLASSROOM_PASSWORD("ClassroomPassword", ""),
+    CLASSROOM_PORT("ClassroomPort", "12000"),
     OPEN_WORKBENCH_ON_STARTUP("OpenWorkbenchOnStartup", "true"),
     VERBOSE_LOGGING("VerboseLogging", "false");
     
