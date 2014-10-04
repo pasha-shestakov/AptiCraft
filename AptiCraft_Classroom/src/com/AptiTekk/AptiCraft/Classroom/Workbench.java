@@ -1,14 +1,9 @@
 package com.AptiTekk.AptiCraft.Classroom;
 
-import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.SystemTray;
-import java.awt.TrayIcon;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
@@ -45,7 +40,6 @@ public class Workbench extends JFrame implements MouseListener
 	this.classroom = classroom;
 	
 	loadImages();
-	initSysTray();
 	
 	JPanel contentPane = new JPanel(new BorderLayout());
 	this.setContentPane(contentPane);
@@ -124,9 +118,7 @@ public class Workbench extends JFrame implements MouseListener
 	    @Override
 	    public void windowClosing(WindowEvent e)
 	    {
-		classroom.logVerbose("Closing Workbench...");
-		setVisible(false);
-		dispose();
+		closeWorkbench();
 	    }
 	});
 	
@@ -140,9 +132,7 @@ public class Workbench extends JFrame implements MouseListener
     {
 	try
 	{
-	    logoIcon = ImageIO
-		    .read(Workbench.class
-			    .getResource("/assets/images/AptiCraft-Server-Logo-64px.png"));
+	    logoIcon = classroom.logoIcon;
 	    menuIcons = ImageIO.read(Workbench.class
 		    .getResource("/assets/images/gui/menu/Icons.png"));
 	    headerImage = ImageIO.read(Workbench.class
@@ -154,38 +144,18 @@ public class Workbench extends JFrame implements MouseListener
 	}
     }
     
-    private void initSysTray()
-    {
-	if(SystemTray.isSupported())
-	{
-	    final TrayIcon trayIcon = new TrayIcon(logoIcon,
-		    "AptiCraft Classroom");
-	    trayIcon.setImageAutoSize(true);
-	    trayIcon.addActionListener(new ActionListener()
-	    {
-		public void actionPerformed(ActionEvent e)
-		{
-		    showWorkbench();
-		}
-	    });
-	    SystemTray systemTray = SystemTray.getSystemTray();
-	    try
-	    {
-		systemTray.add(trayIcon);
-	    }
-	    catch(AWTException e)
-	    {
-		e.printStackTrace();
-	    }
-	    
-	}
-    }
-    
-    private void showWorkbench()
+    void showWorkbench()
     {
 	this.classroom.logVerbose("Opening Workbench...");
 	this.setLocationRelativeTo(null);
 	this.setVisible(true);
+    }
+    
+    void closeWorkbench()
+    {
+	classroom.logVerbose("Closing Workbench...");
+	setVisible(false);
+	dispose();
     }
     
     @Override

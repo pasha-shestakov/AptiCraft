@@ -37,7 +37,8 @@ public class LoggingHandler
 		if(unsortedFiles.length > 8)
 		{
 		    File[] sortedFiles = new File[unsortedFiles.length];
-		    LinkedList<File> unsortedFilesList = new LinkedList<File>(Arrays.asList(unsortedFiles));
+		    LinkedList<File> unsortedFilesList = new LinkedList<File>(
+			    Arrays.asList(unsortedFiles));
 		    int lastModifiedFile = 0;
 		    int i = 0;
 		    while(unsortedFilesList.size() > 0)
@@ -45,13 +46,14 @@ public class LoggingHandler
 			for(int j = 0; j < unsortedFilesList.size(); j++)
 			{
 			    File f = unsortedFilesList.get(j);
-				if(f.lastModified() > unsortedFilesList.get(lastModifiedFile
-					).lastModified())
-				{
-				    lastModifiedFile = j;
-				}
+			    if(f.lastModified() > unsortedFilesList.get(
+				    lastModifiedFile).lastModified())
+			    {
+				lastModifiedFile = j;
+			    }
 			}
-			sortedFiles[i] = unsortedFilesList.get(lastModifiedFile);
+			sortedFiles[i] = unsortedFilesList
+				.get(lastModifiedFile);
 			unsortedFilesList.remove(lastModifiedFile);
 			lastModifiedFile = 0;
 			i++;

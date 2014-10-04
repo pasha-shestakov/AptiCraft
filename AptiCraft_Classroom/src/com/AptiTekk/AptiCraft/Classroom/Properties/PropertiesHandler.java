@@ -18,6 +18,7 @@ public class PropertiesHandler
 	    Utilities.getRootDirectory(), propertiesFileName);
     private Properties properties;
     private Classroom classroom;
+    private FileInputStream inputStream;
     
     public PropertiesHandler(Classroom classroom)
     {
@@ -26,6 +27,25 @@ public class PropertiesHandler
 	classroom.logVerbose("Properties Loaded.");
 	validateProperties();
 	classroom.logVerbose("Properties Validated.");
+    }
+    
+    private void loadProperties()
+    {
+	classroom.logVerbose("Loading Properties...");
+	this.properties = new Properties();
+	try
+	{
+	    this.inputStream = new FileInputStream(propertiesFile);
+	    properties.load(inputStream);
+	}
+	catch(FileNotFoundException e)
+	{
+	    createNewProperties();
+	}
+	catch(IOException e)
+	{
+	    e.printStackTrace();
+	}
     }
     
     private void createNewProperties()
@@ -54,6 +74,21 @@ public class PropertiesHandler
 	    saveProperties();
     }
     
+    public void closeProperties()
+    {
+	classroom.logVerbose("Closing Properties...");
+	saveProperties();
+	if(this.inputStream != null)
+	    try
+	    {
+		this.inputStream.close();
+	    }
+	    catch(IOException e)
+	    {
+		e.printStackTrace();
+	    }
+    }
+    
     private boolean parseBoolean(PropertiesEnum key)
     {
 	return this.properties.getProperty(key.getKey(), key.getDefaultValue())
@@ -74,32 +109,16 @@ public class PropertiesHandler
     
     private void saveProperties()
     {
-	classroom.logVerbose("Saving Properties.");
+	classroom.logVerbose("Saving Properties...");
 	try
 	{
-	    this.properties.store(new FileOutputStream(propertiesFile), null);
+	    FileOutputStream outputStream = new FileOutputStream(propertiesFile);
+	    this.properties.store(outputStream, null);
+	    outputStream.close();
 	}
 	catch(FileNotFoundException e)
 	{
 	    e.printStackTrace();
-	}
-	catch(IOException e)
-	{
-	    e.printStackTrace();
-	}
-    }
-    
-    private void loadProperties()
-    {
-	classroom.logVerbose("Loading Properties...");
-	this.properties = new Properties();
-	try
-	{
-	    properties.load(new FileInputStream(propertiesFile));
-	}
-	catch(FileNotFoundException e)
-	{
-	    createNewProperties();
 	}
 	catch(IOException e)
 	{
