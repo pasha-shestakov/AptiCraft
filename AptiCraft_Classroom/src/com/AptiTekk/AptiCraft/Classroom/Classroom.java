@@ -14,8 +14,9 @@ import java.util.logging.Level;
 import javax.imageio.ImageIO;
 
 import com.AptiTekk.AptiCraft.Classroom.Logging.LoggingHandler;
+import com.AptiTekk.AptiCraft.Classroom.Networking.Multicast.LANMulticaster;
+import com.AptiTekk.AptiCraft.Classroom.Networking.TCP.TCPServer;
 import com.AptiTekk.AptiCraft.Classroom.Properties.PropertiesHandler;
-import com.AptiTekk.AptiCraft.Classroom.TCP.TCPServer;
 
 public class Classroom
 {
@@ -34,13 +35,14 @@ public class Classroom
 			: Level.INFO);
 	log("Initializing Classroom...");
 	TCPServer.startTCPServer(this);
+	LANMulticaster.startMulticaster(this);
 	logVerbose("Creating Workbench...");
-	this.workbench = new Workbench(this,
-		this.propertiesHandler.getOpenWorkbenchOnStartup());
 	logVerbose("Loading Classroom Images...");
 	loadImages();
 	logVerbose("Initializing Classroom System Tray Icon...");
 	initSysTray();
+	this.workbench = new Workbench(this,
+		this.propertiesHandler.getOpenWorkbenchOnStartup());
 	log("Classroom Initialization Complete!");
     }
     
@@ -121,7 +123,8 @@ public class Classroom
     {
 	log("Shutting Down Classroom...");
 	workbench.closeWorkbench();
-	TCPServer.stopTCPServer();
+	TCPServer.stopTCPServer(this);
+	LANMulticaster.stopMulticaster(this);
 	propertiesHandler.closeProperties();
 	log("Classroom Shutdown Complete!");
 	System.exit(0);
@@ -156,5 +159,5 @@ public class Classroom
     {
 	this.loggingHandler.logMessage(message, Level.SEVERE);
     }
-
+    
 }

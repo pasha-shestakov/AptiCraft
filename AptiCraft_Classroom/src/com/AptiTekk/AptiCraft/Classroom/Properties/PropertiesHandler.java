@@ -103,7 +103,7 @@ public class PropertiesHandler
     
     private void setProperty(PropertiesEnum key, int value)
     {
-	this.properties.setProperty(key.getKey(), value+"");
+	this.properties.setProperty(key.getKey(), value + "");
 	this.saveProperties();
     }
     
@@ -143,7 +143,8 @@ public class PropertiesHandler
 	
 	try
 	{
-	    parsed = Integer.parseInt(this.properties.getProperty(key.getKey(), key.getDefaultValue()));
+	    parsed = Integer.parseInt(this.properties.getProperty(key.getKey(),
+		    key.getDefaultValue()));
 	}
 	catch(NumberFormatException e)
 	{
@@ -181,6 +182,26 @@ public class PropertiesHandler
     public void setClassroomPort(int port)
     {
 	setProperty(PropertiesEnum.CLASSROOM_PORT, port);
+    }
+    
+    public String getMulticastIP()
+    {
+	return parseString(PropertiesEnum.MULTICAST_IP);
+    }
+    
+    public void setMulticastIP(String IP)
+    {
+	setProperty(PropertiesEnum.MULTICAST_IP, IP);
+    }
+    
+    public int getMulticastPort()
+    {
+	return parseInteger(PropertiesEnum.MULTICAST_PORT);
+    }
+    
+    public void setMulticastPort(int port)
+    {
+	setProperty(PropertiesEnum.MULTICAST_PORT, port);
     }
     
     public boolean getOpenWorkbenchOnStartup()
