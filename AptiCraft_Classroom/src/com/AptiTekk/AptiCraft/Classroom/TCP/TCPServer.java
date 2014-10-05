@@ -3,6 +3,9 @@ package com.AptiTekk.AptiCraft.Classroom.TCP;
 import java.io.IOException;
 
 import com.AptiTekk.AptiCraft.Classroom.Classroom;
+import com.AptiTekk.AptiCraft.Classroom.TCP.Packets.Packet;
+import com.AptiTekk.AptiCraft.Classroom.TCP.Packets.Requests.Request0Authentication;
+import com.AptiTekk.AptiCraft.Classroom.TCP.Packets.Responses.Response0Authentication;
 import com.esotericsoftware.kryonet.Server;
 
 public class TCPServer
@@ -22,13 +25,14 @@ public class TCPServer
 	}
 	
 	server = new Server();
+	registerPacketTypes();
 	server.start();
 	try
 	{
 	    int port = classroom.getPropertiesHandler().getClassroomPort();
 	    server.bind(port);
 	    classroom.logVerbose("Server bound to TCP Port "+port+".");
-	    server.addListener(new TCPListener());
+	    server.addListener(new TCPListener(classroom));
 	    classroom.logVerbose("Added TCPListener.");
 	}
 	catch(IOException e)
@@ -37,6 +41,18 @@ public class TCPServer
 	    classroom.logSevere(e.toString());
 	}
 	classroom.log("TCPServer Started.");
+    }
+    
+    private static void registerPacketTypes()
+    {
+	//Data Types
+	server.getKryo().register(int.class);
+	server.getKryo().register(String.class);
+	
+	//Packets
+	server.getKryo().register(Packet.class);
+	server.getKryo().register(Request0Authentication.class);
+	server.getKryo().register(Response0Authentication.class);
     }
     
     public static void stopTCPServer()
