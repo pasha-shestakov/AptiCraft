@@ -36,6 +36,7 @@ public class TCPClient
 	//Data Types
 	client.getKryo().register(int.class);
 	client.getKryo().register(String.class);
+	client.getKryo().register(boolean.class);
 	
 	//Packets
 	client.getKryo().register(Packet.class);

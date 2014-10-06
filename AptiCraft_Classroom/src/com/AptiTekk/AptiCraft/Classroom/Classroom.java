@@ -13,6 +13,7 @@ import java.util.logging.Level;
 
 import javax.imageio.ImageIO;
 
+import com.AptiTekk.AptiCraft.Classroom.GUI.Workbench;
 import com.AptiTekk.AptiCraft.Classroom.Logging.LoggingHandler;
 import com.AptiTekk.AptiCraft.Classroom.Networking.Multicast.LANMulticaster;
 import com.AptiTekk.AptiCraft.Classroom.Networking.TCP.TCPServer;
@@ -24,7 +25,7 @@ public class Classroom
     private LoggingHandler loggingHandler;
     private PropertiesHandler propertiesHandler;
     private Workbench workbench;
-    BufferedImage logoIcon;
+    public BufferedImage logoIcon;
     
     public Classroom()
     {

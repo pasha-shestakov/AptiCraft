@@ -40,6 +40,7 @@ public class TCPServer
 	// Data Types
 	server.getKryo().register(int.class);
 	server.getKryo().register(String.class);
+	server.getKryo().register(boolean.class);
 	
 	// Packets
 	server.getKryo().register(Packet.class);

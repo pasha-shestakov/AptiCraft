@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import com.AptiTekk.AptiCraft.Classroom.Classroom;
-import com.AptiTekk.AptiCraft.Classroom.Utilities;
+import com.AptiTekk.AptiCraft.Classroom.Utilities.Utilities;
 
 public class PropertiesHandler
 {

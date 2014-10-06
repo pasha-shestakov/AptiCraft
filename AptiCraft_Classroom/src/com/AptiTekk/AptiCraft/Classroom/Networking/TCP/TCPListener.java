@@ -35,11 +35,14 @@ public class TCPListener extends Listener
 	    if(object instanceof Request0Authentication)
 	    {
 		Request0Authentication request = (Request0Authentication) object;
-		classroom.logVerbose("Recieved Message From Client: "
-			+ request.text);
+		classroom.logVerbose("Client sent Password: "+request.ClassroomPassword);
 		
 		Response0Authentication response = new Response0Authentication();
-		response.text = "It Worked!";
+		if(classroom.getPropertiesHandler().getClassroomPassword().equals(request.ClassroomPassword))
+		    response.correctPassword = true;
+		else 
+		    response.correctPassword = false;
+		
 		connection.sendTCP(response);
 	    }
 	}

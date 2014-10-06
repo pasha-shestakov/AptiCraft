@@ -1,4 +1,4 @@
-package com.AptiTekk.AptiCraft.Classroom;
+package com.AptiTekk.AptiCraft.Classroom.GUI;
 
 public enum MenuEnum
 {

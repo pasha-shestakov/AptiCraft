@@ -1,4 +1,4 @@
-package com.AptiTekk.AptiCraft.Classroom;
+package com.AptiTekk.AptiCraft.Classroom.GUI;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;

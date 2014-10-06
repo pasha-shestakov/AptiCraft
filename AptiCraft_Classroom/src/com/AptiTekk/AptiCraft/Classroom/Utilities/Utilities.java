@@ -1,4 +1,4 @@
-package com.AptiTekk.AptiCraft.Classroom;
+package com.AptiTekk.AptiCraft.Classroom.Utilities;
 
 import java.io.File;
 import java.io.IOException;

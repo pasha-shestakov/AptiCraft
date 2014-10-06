@@ -25,7 +25,7 @@ public class TCPListener extends Listener
 	if(packetType == Request0Authentication.class)
 	{
 	    Request0Authentication request = new Request0Authentication();
-	    request.text = "Hi Server!";
+	    request.ClassroomPassword = "";
 	    
 	    client.sendTCP(request);
 	}
@@ -40,7 +40,7 @@ public class TCPListener extends Listener
     {
         if (object instanceof Response0Authentication) {
             Response0Authentication response = (Response0Authentication) object;
-            System.out.println(response.text);
+            System.out.println("Password was "+((response.correctPassword) ? "Correct" : "Incorrect")+".");
         }
     }
 }

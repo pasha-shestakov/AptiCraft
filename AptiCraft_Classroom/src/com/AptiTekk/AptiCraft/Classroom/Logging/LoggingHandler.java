@@ -12,7 +12,7 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.AptiTekk.AptiCraft.Classroom.Utilities;
+import com.AptiTekk.AptiCraft.Classroom.Utilities.Utilities;
 
 public class LoggingHandler
 {

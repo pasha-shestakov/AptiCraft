@@ -1,4 +1,4 @@
-package com.AptiTekk.AptiCraft.Classroom;
+package com.AptiTekk.AptiCraft.Classroom.GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,6 +16,8 @@ import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import com.AptiTekk.AptiCraft.Classroom.Classroom;
 
 @SuppressWarnings("serial")
 public class Workbench extends JFrame implements MouseListener
@@ -144,14 +146,14 @@ public class Workbench extends JFrame implements MouseListener
 	}
     }
     
-    void showWorkbench()
+    public void showWorkbench()
     {
 	this.classroom.logVerbose("Opening Workbench...");
 	this.setLocationRelativeTo(null);
 	this.setVisible(true);
     }
     
-    void closeWorkbench()
+    public void closeWorkbench()
     {
 	classroom.logVerbose("Closing Workbench...");
 	setVisible(false);
