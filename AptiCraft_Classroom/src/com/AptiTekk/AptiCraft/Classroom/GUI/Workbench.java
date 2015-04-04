@@ -136,9 +136,9 @@ public class Workbench extends JFrame implements MouseListener
 	{
 	    logoIcon = classroom.logoIcon;
 	    menuIcons = ImageIO.read(Workbench.class
-		    .getResource("/assets/images/gui/menu/Icons.png"));
+		    .getResource("/images/gui/menu/Icons.png"));
 	    headerImage = ImageIO.read(Workbench.class
-		    .getResource("/assets/images/gui/header/Header.png"));
+		    .getResource("/images/gui/header/Header.png"));
 	}
 	catch(IOException e)
 	{

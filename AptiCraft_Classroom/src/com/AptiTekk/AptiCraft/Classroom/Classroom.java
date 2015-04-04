@@ -52,8 +52,7 @@ public class Classroom
 	try
 	{
 	    logoIcon = ImageIO
-		    .read(Classroom.class
-			    .getResource("/assets/images/AptiCraft-Server-Logo-64px.png"));
+		    .read(getClass().getResource("/images/AptiCraft-Server-Logo-64px.png"));
 	}
 	catch(IOException e)
 	{
