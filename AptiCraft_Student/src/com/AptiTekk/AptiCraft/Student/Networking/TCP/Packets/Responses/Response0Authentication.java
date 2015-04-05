@@ -1,6 +1,6 @@
-package com.AptiTekk.AptiCraft.Student.TCP.Packets.Responses;
+package com.AptiTekk.AptiCraft.Student.Networking.TCP.Packets.Responses;
 
-import com.AptiTekk.AptiCraft.Student.TCP.Packets.Packet;
+import com.AptiTekk.AptiCraft.Student.Networking.TCP.Packets.Packet;
 
 public class Response0Authentication extends Packet
 {

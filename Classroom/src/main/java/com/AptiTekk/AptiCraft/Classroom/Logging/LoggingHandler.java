@@ -66,7 +66,7 @@ public class LoggingHandler
 		    }
 		}
 	    }
-	    FileHandler handler = new FileHandler("logs/" + timeStamp
+	    FileHandler handler = new FileHandler(Utilities.getRootDirectory()+"/logs/" + timeStamp
 		    + "_%u_%g.log", 30000, 4, false);
 	    handler.setFormatter(new SingleLineFormatter());
 	    logger.addHandler(handler);

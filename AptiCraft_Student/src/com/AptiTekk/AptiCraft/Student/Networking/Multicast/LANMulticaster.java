@@ -1,4 +1,4 @@
-package com.AptiTekk.AptiCraft.Classroom.Networking.Multicast;
+package com.AptiTekk.AptiCraft.Student.Networking.Multicast;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -6,36 +6,29 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
 
-import com.AptiTekk.AptiCraft.Classroom.Classroom;
+import com.AptiTekk.AptiCraft.Student.Student;
 
 public class LANMulticaster
 {
     private static Thread thread;
     private static boolean running = false;
     private static MulticastSocket multicastSocket;
-    private static String classroomName;
-    private static boolean classroomHasPassword;
-    private static int classroomPort;
     private static String multicastIP;
     private static int multicastPort;
     
     private static final String DELIMETER = "§";
     
-    public static void startMulticaster(Classroom classroom)
+    public static void startMulticaster(Student student)
     {
-        stopMulticaster(classroom);
+        stopMulticaster(student);
         
-        classroomName = classroom.getPropertiesHandler().getClassroomName();
-        classroomHasPassword = !classroom.getPropertiesHandler().getClassroomPassword().isEmpty();
-        classroomPort = classroom.getPropertiesHandler().getClassroomPort();
-        multicastIP = classroom.getPropertiesHandler().getMulticastIP();
-        multicastPort = classroom.getPropertiesHandler().getMulticastPort();
+        multicastIP = "239.1.20.0";
+        multicastPort = 12010;
         
-        classroom.logVerbose("Initializing Multicaster...");
+        student.logVerbose("Initializing Multicaster...");
         thread = new Thread()
         {
             @Override
@@ -57,35 +50,34 @@ public class LANMulticaster
                     multicastSocket.setInterface(InetAddress.getLocalHost());
                     multicastSocket.joinGroup(multicastGroup);
                     
-                    byte[] packet = ("AptiCraft" + DELIMETER + "Classroom" + DELIMETER + classroomName + DELIMETER + classroomHasPassword + DELIMETER + classroomPort).getBytes();
+                    byte[] packet = ("AptiCraft" + DELIMETER + "Student" + DELIMETER + "listClassrooms").getBytes();
                     
                     DatagramPacket dataPacket = new DatagramPacket(new byte[512], 512);
+                    
+                    multicastSocket.send(new DatagramPacket(packet, packet.length, multicastGroup, multicastPort));
+                    System.out.println("Classrooms Available:");
                     
                     while(running)
                     {
                         multicastSocket.receive(dataPacket);
                         String data = new String(dataPacket.getData()).trim();
                         String[] dataSplit = data.split(DELIMETER);
-                        if(dataSplit.length < 3)
+                        if(dataSplit.length < 5)
                             continue;
                         
                         if(dataSplit[0].equals("AptiCraft"))
                         {
                             String clientType = dataSplit[1];
-                            if(clientType.equals("Student"))
+                            if(clientType.equals("Classroom"))
                             {
-                                String requestType = dataSplit[2];
-                                if(requestType.equals("listClassrooms"))
-                                {
-                                    multicastSocket.send(new DatagramPacket(packet, packet.length, multicastGroup, multicastPort));
-                                }
+                                String classroomName = dataSplit[2];
+                                boolean hasPassword = Boolean.parseBoolean(dataSplit[3]);
+                                int classroomPort = Integer.parseInt(dataSplit[4]);
+                                
+                                System.out.println("Name: " + classroomName + " / Has Password: " + hasPassword + " / Port: " + classroomPort);
                             }
                         }
                     }
-                }
-                catch(SocketException expected)
-                {
-                    ;
                 }
                 catch(UnknownHostException e)
                 {
@@ -101,11 +93,11 @@ public class LANMulticaster
         thread.start();
     }
     
-    public static void stopMulticaster(Classroom classroom)
+    public static void stopMulticaster(Student student)
     {
         if(thread != null)
         {
-            classroom.logVerbose("Stopping Multicaster...");
+            student.logVerbose("Stopping Multicaster...");
             thread.interrupt();
         }
     }

@@ -1,4 +1,4 @@
-package com.AptiTekk.AptiCraft.Classroom.Logging;
+package com.AptiTekk.AptiCraft.Student.Logging;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.AptiTekk.AptiCraft.Classroom.Utilities.Utilities;
+import com.AptiTekk.AptiCraft.Student.Utilities.Utilities;
 
 public class LoggingHandler
 {
@@ -21,7 +21,7 @@ public class LoggingHandler
     
     public LoggingHandler()
     {
-	this.logger = Logger.getLogger("AptiCraft Classroom");
+	this.logger = Logger.getLogger("AptiCraft Student");
 	
 	try
 	{
@@ -34,7 +34,6 @@ public class LoggingHandler
 	    {
 		File[] unsortedFiles = new File(Utilities.getRootDirectory(),
 			"logs").listFiles();
-		System.out.println(Utilities.getRootDirectory());
 		if(unsortedFiles.length > 8)
 		{
 		    File[] sortedFiles = new File[unsortedFiles.length];
@@ -66,7 +65,7 @@ public class LoggingHandler
 		    }
 		}
 	    }
-	    FileHandler handler = new FileHandler("logs/" + timeStamp
+	    FileHandler handler = new FileHandler(Utilities.getRootDirectory()+"/logs/" + timeStamp
 		    + "_%u_%g.log", 30000, 4, false);
 	    handler.setFormatter(new SingleLineFormatter());
 	    logger.addHandler(handler);
