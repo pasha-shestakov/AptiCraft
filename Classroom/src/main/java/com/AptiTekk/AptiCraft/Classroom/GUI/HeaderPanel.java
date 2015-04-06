@@ -1,5 +1,6 @@
 package com.AptiTekk.AptiCraft.Classroom.GUI;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 
@@ -8,67 +9,43 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class HeaderPanel extends JPanel
+import org.jdesktop.swingx.JXPanel;
+import org.jdesktop.swingx.border.DropShadowBorder;
+
+public class HeaderPanel extends JXPanel
 {
     
     private BufferedImage headerImage;
     private ImageIcon logoIcon;
-    private ImageIcon homeIcon;
-    private ImageIcon serversIcon;
-    private ImageIcon templatesIcon;
-    private ImageIcon pluginsIcon;
-    private ImageIcon settingsIcon;
-    private JLabel menuLabel;
     
     public HeaderPanel(BufferedImage headerImage)
     {
 	this.headerImage = headerImage;
 	
 	this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-	this.setPreferredSize(new Dimension(694, 80));
+	
+	DropShadowBorder shadow = new DropShadowBorder();
+	
+	shadow.setShadowColor(Color.BLACK);
+	shadow.setShadowSize(10);
+	shadow.setShowLeftShadow(false);
+	shadow.setShowRightShadow(false);
+	shadow.setShowTopShadow(false);
+	shadow.setShowBottomShadow(true);
+	
+	this.setBorder(shadow);
 	
 	this.logoIcon = new ImageIcon(headerImage.getSubimage(0, 0, 694, 50));
-	this.homeIcon = new ImageIcon(headerImage.getSubimage(0, 50, 694, 30));
-	this.serversIcon = new ImageIcon(
-		headerImage.getSubimage(0, 80, 694, 30));
-	this.templatesIcon = new ImageIcon(headerImage.getSubimage(0, 110, 694,
-		30));
-	this.pluginsIcon = new ImageIcon(headerImage.getSubimage(0, 140, 694,
-		30));
-	this.settingsIcon = new ImageIcon(headerImage.getSubimage(0, 170, 694,
-		30));
 	
 	JLabel logoLabel = new JLabel();
 	logoLabel.setIcon(logoIcon);
 	this.add(logoLabel);
-	
-	this.menuLabel = new JLabel();
-	menuLabel.setIcon(homeIcon);
-	this.add(menuLabel);
     }
     
-    public void setMenuLabel(MenuEnum menuEnum)
+    @Override
+    public Dimension getPreferredSize()
     {
-	switch(menuEnum)
-	{
-	    case HOME:
-		menuLabel.setIcon(homeIcon);
-		break;
-	    case SERVERS:
-		menuLabel.setIcon(serversIcon);
-		break;
-	    case TEMPLATES:
-		menuLabel.setIcon(templatesIcon);
-		break;
-	    case PLUGINS:
-		menuLabel.setIcon(pluginsIcon);
-		break;
-	    case SETTINGS:
-		menuLabel.setIcon(settingsIcon);
-		break;
-	    default:
-		break;
-	}
+        return new Dimension(800, 75);
     }
     
 }
