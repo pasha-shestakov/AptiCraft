@@ -52,8 +52,8 @@ public class MenuPanel extends JPanel implements MouseListener
     @Override
     public void validate()
     {
-        this.borderHeight = (this.getHeight() - (5 * 60)) / 6;
-        this.setBorder(new EmptyBorder(borderHeight, 15, 0, 0));
+        this.borderHeight = (this.getHeight() + 14 - (5 * 60)) / 6;
+        this.setBorder(new EmptyBorder(borderHeight - 14, 15, 0, 0));
         for(MenuButton button : menuButtons)
         {
             button.setBorder(new EmptyBorder(0, 0, borderHeight, 0));
