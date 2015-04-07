@@ -59,6 +59,7 @@ public class LANMulticaster
                     
                     while(running)
                     {
+                        dataPacket.setData(new byte[512]);
                         multicastSocket.receive(dataPacket);
                         String data = new String(dataPacket.getData()).trim();
                         String[] dataSplit = data.split(DELIMETER);
