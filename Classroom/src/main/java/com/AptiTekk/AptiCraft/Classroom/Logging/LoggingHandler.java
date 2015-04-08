@@ -34,7 +34,6 @@ public class LoggingHandler
 	    {
 		File[] unsortedFiles = new File(Utilities.getRootDirectory(),
 			"logs").listFiles();
-		System.out.println(Utilities.getRootDirectory());
 		if(unsortedFiles.length > 8)
 		{
 		    File[] sortedFiles = new File[unsortedFiles.length];
