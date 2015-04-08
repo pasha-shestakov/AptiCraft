@@ -1,52 +1,65 @@
 package com.AptiTekk.AptiCraft.Classroom.GUI;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.AptiTekk.AptiCraft.Classroom.GUI.Cards.CardPanel;
+import com.AptiTekk.AptiCraft.Classroom.GUI.Cards.HomeCard;
+import com.AptiTekk.AptiCraft.Classroom.GUI.Cards.PluginsCard;
+import com.AptiTekk.AptiCraft.Classroom.GUI.Cards.ServersCard;
+import com.AptiTekk.AptiCraft.Classroom.GUI.Cards.SettingsCard;
+import com.AptiTekk.AptiCraft.Classroom.GUI.Cards.TemplatesCard;
+
 public class MenuPanel extends JPanel implements MouseListener
 {
     
-    private ArrayList<MenuButton> menuButtons = new ArrayList<MenuButton>();
+    private HashMap<MenuButton, CardPanel> menuButtonsMap = new HashMap<MenuButton, CardPanel>();
     
     private int borderHeight;
     private BufferedImage menuIcons;
+
+    private Workbench workbench;
     
-    public MenuPanel(BufferedImage menuIcons)
+    public MenuPanel(Workbench workbench, BufferedImage menuIcons)
     {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBackground(new Color(235, 235, 235));
         
+        this.workbench = workbench;
         this.menuIcons = menuIcons;
         this.borderHeight = 20;
         
         setBorder(new EmptyBorder(borderHeight, 15, 0, 0));
         
-        addButton(MenuEnum.HOME, 60, 60, 0, 0);
-        addButton(MenuEnum.SERVERS, 60, 60, 60, 0);
-        addButton(MenuEnum.TEMPLATES, 60, 60, 120, 0);
-        addButton(MenuEnum.PLUGINS, 60, 60, 180, 0);
-        addButton(MenuEnum.SETTINGS, 60, 60, 240, 0);
-        
-        clearButtons();
-        menuButtons.get(0).setHighlighted(true);
+        addButton(new HomeCard(workbench), 60, 60, 0, 0);
+        addButton(new ServersCard(), 60, 60, 60, 0);
+        addButton(new TemplatesCard(), 60, 60, 120, 0);
+        addButton(new PluginsCard(), 60, 60, 180, 0);
+        addButton(new SettingsCard(), 60, 60, 240, 0);
     }
     
-    private void addButton(MenuEnum enom, int w, int h, int x, int y)
+    private void addButton(CardPanel card, int w, int h, int x, int y)
     {
-        MenuButton button = new MenuButton(menuIcons, enom, w, h, x, y);
+        MenuButton button = new MenuButton(menuIcons, w, h, x, y);
         button.addMouseListener(this);
         button.setBorder(new EmptyBorder(0,0,borderHeight,0));
         this.add(button);
-        menuButtons.add(button);
+        workbench.addCard(card);
+        
+        if(menuButtonsMap.isEmpty())
+        {
+            workbench.setCard(card);
+            button.setHighlighted(true);
+        }
+        menuButtonsMap.put(button, card);
     }
     
     @Override
@@ -54,7 +67,7 @@ public class MenuPanel extends JPanel implements MouseListener
     {
         this.borderHeight = (this.getHeight() + 14 - (5 * 60)) / 6;
         this.setBorder(new EmptyBorder(borderHeight - 14, 15, 0, 0));
-        for(MenuButton button : menuButtons)
+        for(MenuButton button : menuButtonsMap.keySet())
         {
             button.setBorder(new EmptyBorder(0, 0, borderHeight, 0));
         }
@@ -63,7 +76,7 @@ public class MenuPanel extends JPanel implements MouseListener
     
     private void clearButtons()
     {
-        for(MenuButton button : menuButtons)
+        for(MenuButton button : menuButtonsMap.keySet())
         {
             button.setHighlighted(false);
             button.setShrunk(false);
@@ -126,6 +139,7 @@ public class MenuPanel extends JPanel implements MouseListener
             {
                 clearButtons();
                 button.setHighlighted(true);
+                workbench.setCard(menuButtonsMap.get(button));
             }
         }
     }
