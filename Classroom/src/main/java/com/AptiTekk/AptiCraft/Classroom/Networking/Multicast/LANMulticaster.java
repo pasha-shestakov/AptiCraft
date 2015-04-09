@@ -86,7 +86,7 @@ public class LANMulticaster
                 }
                 catch(SocketException expected)
                 {
-                    expected.printStackTrace();
+                    ;
                 }
                 catch(UnknownHostException e)
                 {

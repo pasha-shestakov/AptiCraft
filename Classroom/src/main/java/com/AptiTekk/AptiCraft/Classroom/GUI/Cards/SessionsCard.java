@@ -3,10 +3,10 @@ package com.AptiTekk.AptiCraft.Classroom.GUI.Cards;
 import com.AptiTekk.AptiCraft.Classroom.GUI.Workbench;
 
 
-public class TemplatesCard extends CardPanel
+public class SessionsCard extends CardPanel
 {
     
-    public TemplatesCard(Workbench workbench)
+    public SessionsCard(Workbench workbench)
     {
         super(workbench);
     }

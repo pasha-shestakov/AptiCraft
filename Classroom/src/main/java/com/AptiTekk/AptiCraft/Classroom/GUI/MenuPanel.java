@@ -14,7 +14,7 @@ import javax.swing.border.EmptyBorder;
 import com.AptiTekk.AptiCraft.Classroom.GUI.Cards.CardPanel;
 import com.AptiTekk.AptiCraft.Classroom.GUI.Cards.HomeCard;
 import com.AptiTekk.AptiCraft.Classroom.GUI.Cards.PluginsCard;
-import com.AptiTekk.AptiCraft.Classroom.GUI.Cards.ServersCard;
+import com.AptiTekk.AptiCraft.Classroom.GUI.Cards.SessionsCard;
 import com.AptiTekk.AptiCraft.Classroom.GUI.Cards.SettingsCard;
 import com.AptiTekk.AptiCraft.Classroom.GUI.Cards.TemplatesCard;
 
@@ -40,10 +40,10 @@ public class MenuPanel extends JPanel implements MouseListener
         setBorder(new EmptyBorder(borderHeight, 15, 0, 0));
         
         addButton(new HomeCard(workbench), 60, 60, 0, 0);
-        addButton(new ServersCard(), 60, 60, 60, 0);
-        addButton(new TemplatesCard(), 60, 60, 120, 0);
-        addButton(new PluginsCard(), 60, 60, 180, 0);
-        addButton(new SettingsCard(), 60, 60, 240, 0);
+        addButton(new SessionsCard(workbench), 60, 60, 60, 0);
+        addButton(new TemplatesCard(workbench), 60, 60, 120, 0);
+        addButton(new PluginsCard(workbench), 60, 60, 180, 0);
+        addButton(new SettingsCard(workbench), 60, 60, 240, 0);
     }
     
     private void addButton(CardPanel card, int w, int h, int x, int y)

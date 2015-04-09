@@ -12,11 +12,13 @@ public class CardPanel extends JPanel
 {
     protected static final Font vegurRegular = Workbench.getVegurRegular();
     protected static final Font vegurLight = Workbench.getVegurLight();
+    protected Workbench workbench;
 
     private final String cardName;
     
-    public CardPanel()
+    public CardPanel(Workbench workbench)
     {
+        this.workbench = workbench;
         this.cardName = UUID.randomUUID().toString();
     }
     
